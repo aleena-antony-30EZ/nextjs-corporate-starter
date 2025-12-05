@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi_password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  strapi:
+    build: ./backend
+    container_name: strapi
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 1337
+      APP_KEYS: "something1,something2"
+      API_TOKEN_SALT: something
+      ADMIN_JWT_SECRET: something
+      JWT_SECRET: something
+      TRANSFER_TOKEN_SALT: something
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi_password
+    ports:
+      - "1337:1337"
+
+  nextjs:
+    build: ./frontend
+    container_name: nextjs
+    depends_on:
+      - strapi
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_STRAPI_API_TOKEN: 76f2827f67090b4919b988cb256211ea1d95216103cff174204b68e18f7555a9022a285c685d1fe2a62a66a6772f1656963885c9641ad678fcd7699cb6fd0547d03e90576a64e1f07f7e51006776f0b89a9cb1348400e65fc06d334529d25e08aab2549b12ecb6af2fcf64c676181a5bba7f67413e0f08d8a916b71d831f1cf4
+      NEXT_PUBLIC_PAGE_LIMIT: 6
+      NEXT_PUBLIC_STRAPI_FORM_SUBMISSION_TOKEN: bbaced71c37765d50a1b72583050cf9973215fdfb5bd15d1d870f3747f611fccb7377f08633f4a1db1a0f8f7b57525758e918073340063663e813487469e56080b1aa4983ae09210cd1b17ab756cda34230d3db17016e6aaa9161f9ee78b4ca648aa15102008f2ad153405461c7c7a4f1ff872319d8eb9429b9c20417c08a93f
+      NEXT_PUBLIC_STRAPI_API_URL: http://strapi:1337
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres-data:
+
