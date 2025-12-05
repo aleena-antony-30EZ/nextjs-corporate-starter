@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: nextjs-corporate-site
+  title: Next.js Corporate Site
+  description: Full-stack website using Strapi + Next.js containerized with Docker and Postgres.
+  annotations:
+    github.com/project-slug: aleena-antony-30EZ/nextjs-corporate-starter
+  links:
+    - url: http://209.38.121.93:3000
+      title: Frontend Website
+      icon: web
+    - url: http://209.38.121.93:1337/admin
+      title: Strapi Admin
+      icon: dashboard
+spec:
+  type: website
+  owner: team:devops
+  lifecycle: production
