@@ -6,6 +6,7 @@ metadata:
   description: Full-stack website using Strapi + Next.js containerized with Docker and Postgres.
   annotations:
     github.com/project-slug: aleena-antony-30EZ/nextjs-corporate-starter
+    backstage.io/techdocs-ref: dir:.
   links:
     - url: http://209.38.121.93:3000
       title: Frontend Website
@@ -15,5 +16,5 @@ metadata:
       icon: dashboard
 spec:
   type: website
-  owner: team:devops
+  owner: user:default/guest
   lifecycle: production
